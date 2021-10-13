@@ -12,16 +12,45 @@ public class gamecontroler : MonoBehaviour
     };
 
     public Turnstate turn;
+    // Liste comprenant quel case le joueur a cliqué
     public List<int> pOC;
     public List<int> pTC;
+
+    // Grille comprenant les "cases" du jeu de morpion
+    public GameObject grid;
+    // Boutton start pour afficher la grille
+    public GameObject launch;
+    // Fond
+    public GameObject fond;
+
 
 
     // Start is called before the first frame update
     void Start()
     {
+        // Initialise le tour de base
         turn = Turnstate.PlayerOne;
+
+        // Fait disparaitre la grille au démarage
+        grid.gameObject.SetActive(false);
+        fond.gameObject.SetActive(true);
     }
 
+    public void displayGrid()
+    {
+        // Active la grille quand le fonction est appelé (Appuie sur le boutton) et désactive le boutton
+        grid.gameObject.SetActive(true);
+        launch.gameObject.SetActive(false);
+        fond.gameObject.SetActive(false);
+    }
+
+    // Désactivation de la grille
+    public void desactivate()
+    {
+        grid.gameObject.SetActive(false);
+    }
+
+    // Fonction qui permet de changer le tour des joueur et ajoute l'id de la case modifier avant d'appeller la ofnction de check de victoire
     public void changeTurn(int _id)
     {
         if (turn == Turnstate.PlayerOne) { 
@@ -36,14 +65,19 @@ public class gamecontroler : MonoBehaviour
         check();
     }
 
+    // Fonction qui vérifie la victoire
     void check()
     {
+        // Condition victoire joueur 1
         if ((pOC.Contains(1) && pOC.Contains(5) && pOC.Contains(9)) || (pOC.Contains(3) && pOC.Contains(5) && pOC.Contains(7)) || (pOC.Contains(1) && pOC.Contains(2) && pOC.Contains(3)) || (pOC.Contains(4) && pOC.Contains(5) && pOC.Contains(6)) || (pOC.Contains(7) && pOC.Contains(8) && pOC.Contains(9)) || (pOC.Contains(1) && pOC.Contains(4) && pOC.Contains(7)) || (pOC.Contains(2) && pOC.Contains(5) && pOC.Contains(8)) || (pOC.Contains(3) && pOC.Contains(6) && pOC.Contains(9)))
         {
+            // Désactive la grille a la victoire
+            desactivate();
             Debug.Log("P1 Win");
         }
         else if ((pTC.Contains(1) && pTC.Contains(5) && pTC.Contains(9)) || (pTC.Contains(3) && pTC.Contains(5) && pTC.Contains(7)) || (pTC.Contains(1) && pTC.Contains(2) && pTC.Contains(3)) || (pTC.Contains(4) && pTC.Contains(5) && pTC.Contains(6)) || (pTC.Contains(7) && pTC.Contains(8) && pTC.Contains(9)) || (pTC.Contains(1) && pTC.Contains(4) && pTC.Contains(7)) || (pTC.Contains(2) && pTC.Contains(5) && pTC.Contains(8)) || (pTC.Contains(3) && pTC.Contains(6) && pTC.Contains(9)))
         {
+            desactivate();
             Debug.Log("P2 Win");
         }
     }
