@@ -22,8 +22,7 @@ public class gamecontroler : MonoBehaviour
     public GameObject launch;
     // Fond
     public GameObject fond;
-
-
+    public checkbox[] resCheck;
 
     // Start is called before the first frame update
     void Start()
@@ -47,7 +46,17 @@ public class gamecontroler : MonoBehaviour
     // Désactivation de la grille
     public void desactivate()
     {
-        grid.gameObject.SetActive(false);
+        
+        resCheck = FindObjectsOfType<checkbox>();
+
+        foreach (checkbox box in resCheck)
+        {
+            box.reset();
+        }
+        pOC.Clear();
+        pTC.Clear();
+        turn = Turnstate.PlayerOne;
+
     }
 
     // Fonction qui permet de changer le tour des joueur et ajoute l'id de la case modifier avant d'appeller la ofnction de check de victoire
@@ -74,12 +83,15 @@ public class gamecontroler : MonoBehaviour
             // Désactive la grille a la victoire
             desactivate();
             Debug.Log("P1 Win");
+            
         }
         else if ((pTC.Contains(1) && pTC.Contains(5) && pTC.Contains(9)) || (pTC.Contains(3) && pTC.Contains(5) && pTC.Contains(7)) || (pTC.Contains(1) && pTC.Contains(2) && pTC.Contains(3)) || (pTC.Contains(4) && pTC.Contains(5) && pTC.Contains(6)) || (pTC.Contains(7) && pTC.Contains(8) && pTC.Contains(9)) || (pTC.Contains(1) && pTC.Contains(4) && pTC.Contains(7)) || (pTC.Contains(2) && pTC.Contains(5) && pTC.Contains(8)) || (pTC.Contains(3) && pTC.Contains(6) && pTC.Contains(9)))
         {
             desactivate();
             Debug.Log("P2 Win");
         }
+
+        
     }
 
     // Update is called once per frame

@@ -12,7 +12,6 @@ public class checkbox : MonoBehaviour, IPointerClickHandler//, IPointerEnterHand
     // Variable pour les symbole des joueurs
     public Sprite cross;
     public Sprite circle;
-    public Sprite blank;
     // Id de la box
     public int id;
     // Bool qui vérifie si la case a déja était jouer
@@ -23,7 +22,6 @@ public class checkbox : MonoBehaviour, IPointerClickHandler//, IPointerEnterHand
     {
         // "Affectation" de la jonction sur une variable
         game = FindObjectOfType<gamecontroler>();
-        GetComponent<Image>().sprite = blank;
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -57,7 +55,11 @@ public class checkbox : MonoBehaviour, IPointerClickHandler//, IPointerEnterHand
         
     }
 
-    
+    public void reset()
+    {
+        played = false;
+        GetComponent<Image>().sprite = null;
+    }
 
    /* public void OnPointerEnter(PointerEventData eventData)
     {
